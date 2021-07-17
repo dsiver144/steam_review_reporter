@@ -29,3 +29,16 @@ jobs:
           SENDER_ADDRESS: ${{ secrets.SENDER_ADDRESS }}
           SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
         run: python app.py
+
+      - name: commit current.txt file
+        run: |
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add current.txt
+            git commit -m "Update new review txt" -a
+
+      - name: push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master
