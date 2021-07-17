@@ -7,6 +7,7 @@ import time
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+import os
 
 def getSteamReview0():
     current_count = 0
@@ -36,7 +37,7 @@ def getSteamReview0():
 
 def getSteamReview1():
     current_count = 0
-    path = "D:/current.txt"
+    path = "current.txt"
     flag = False
     try:
         file = open(path, "r")
@@ -74,8 +75,8 @@ def getSteamReview1():
 
 def sendEmail(subject, mail_content):
     #The mail addresses and password
-    sender_address = 'dsiver144@gmail.com'
-    sender_pass = 'emphqfokzlecrwwd'
+    sender_address = os.getenv('SENDER_ADDRESS')
+    sender_pass = os.getenv('SENDER_PASSWORD')
     receiver_address = 'dsiver144@gmail.com'
     #Setup the MIME
     message = MIMEMultipart()
@@ -93,16 +94,17 @@ def sendEmail(subject, mail_content):
     session.quit()
     print('Mail Sent')
 
-schedule.every().day.at("06:00").do(getSteamReview1)
-schedule.every().day.at("09:00").do(getSteamReview1)
-schedule.every().day.at("12:00").do(getSteamReview1)
-schedule.every().day.at("15:00").do(getSteamReview1)
-schedule.every().day.at("15:18").do(getSteamReview1)
-schedule.every().day.at("18:00").do(getSteamReview1)
-schedule.every().day.at("18:00").do(getSteamReview1)
+# schedule.every().day.at("06:00").do(getSteamReview1)
+# schedule.every().day.at("09:00").do(getSteamReview1)
+# schedule.every().day.at("12:00").do(getSteamReview1)
+# schedule.every().day.at("15:00").do(getSteamReview1)
+# schedule.every().day.at("15:18").do(getSteamReview1)
+# schedule.every().day.at("18:00").do(getSteamReview1)
+# schedule.every().day.at("18:00").do(getSteamReview1)
 
 getSteamReview1()
 
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+
+# while True:
+#     schedule.run_pending()
+#     time.sleep(1)
