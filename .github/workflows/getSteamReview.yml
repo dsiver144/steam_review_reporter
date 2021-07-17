@@ -3,6 +3,7 @@ name: getSteamReview
 on:
   schedule:
     - cron: '0 0,6,12 * * *' 
+  push
 
 jobs:
   build:
