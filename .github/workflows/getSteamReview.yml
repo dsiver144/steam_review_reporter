@@ -2,7 +2,7 @@ name: getSteamReview
 
 on:
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '17 45 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
