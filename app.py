@@ -21,7 +21,7 @@ def getSteamReview():
         print("Cant open file!")
         flag = True
 
-    URL = "https://store.steampowered.com/appreviews/1156360?json=1&review_type=all&language=all"
+    URL = "https://store.steampowered.com/appreviews/1156360?json=1&review_type=all&language=all&filter=recent&num_per_page=1"
     data = requests.get(URL).json()
     summary = data['query_summary']
     pos_rv = summary['total_positive']
