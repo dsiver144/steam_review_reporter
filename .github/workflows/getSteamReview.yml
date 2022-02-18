@@ -2,7 +2,7 @@ name: getSteamReview
 
 on:
   schedule:
-    - cron: '0 17,23,5,11 * * *'
+    - cron: '0 17,5 * * *'
   push:
     branches:
       - master
