@@ -11,11 +11,14 @@ import os
 
 def getSteamReview():
     current_count = 0
+    last_review_id = 0
     path = "current.txt"
     flag = False
     try:
         file = open(path, "r")
-        current_count = int(file.readline())
+        result = file.readline().split(",")
+        current_count = int(result[0])
+        last_review_id = int(result[1])
         file.close()
     except:
         print("Cant open file!")
@@ -26,11 +29,14 @@ def getSteamReview():
     summary = data['query_summary']
     pos_rv = summary['total_positive']
     neg_rv = summary['total_negative']
-    if summary['total_reviews'] != current_count:
+    current_review_id = data['reviews'][0]['recommendationid']
+    review_score_desc = summary['review_score_desc'];
+
+    if summary['total_reviews'] != current_count and last_review_id != current_review_id:
         current_count = summary['total_reviews']
 
         file = open(path, "w")
-        file.write(str(current_count))
+        file.write(str(current_count) + "," + str(current_review_id))
         file.close
 
         last_review = data['reviews'][0]
@@ -42,9 +48,9 @@ def getSteamReview():
             date = time.ctime(last_review['author']['last_played'])
             review_icon = '⭕' if last_review['voted_up'] else '❌'
         
-        subject = "🔔 NEW REVIEW(S) FOR PEACEFUL DAYS! 🔔"
-        contents = "💬 Current Reviews: " + str(current_count) + " (✅" + str(pos_rv) + " | ❎" + str(neg_rv) + ")"
-        contents += "\n\n" + review_icon + " Last Review (" + date + "):\n\n" + last_text
+        subject = review_icon + "NEW REVIEW(S) FOR PEACEFUL DAYS!" + review_icon
+        contents = "💬 Current Reviews: " + str(current_count) + " <" + review_score_desc + "> " + " (✅" + str(pos_rv) + " | ❎" + str(neg_rv) + ")"
+        contents += "\n\n Last Review (" + date + "):\n\n" + last_text
         sendEmail(subject, contents)
 
 def sendEmail(subject, mail_content):
